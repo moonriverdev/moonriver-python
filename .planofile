@@ -1,0 +1,20 @@
+from moonriver import *
+
+@command
+def test(app):
+    moon = MoonRiver("test-%", debug=True)
+    greetings = Sender(moon, "greetings")
+
+    @moon.receiver("greetings")
+    def receive_greeting(delivery):
+        print(delivery.message)
+
+    with start("qbroker") as broker:
+        await_port(5672)
+
+        with moon.start():
+            sleep(0.2)
+
+            greetings.send("hello")
+
+            sleep(0.2)
