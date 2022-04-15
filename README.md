@@ -18,4 +18,6 @@ moon = MoonRiver("localhost:5672")
 @moon.receiver("greetings")
 def receive_greeting(delivery):
     print(delivery.message)
+
+moon.run()
 ~~~
